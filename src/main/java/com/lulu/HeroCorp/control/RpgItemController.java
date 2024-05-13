@@ -3,12 +3,10 @@ package com.lulu.HeroCorp.control;
 import com.lulu.HeroCorp.model.RpgItem;
 import com.lulu.HeroCorp.model.RpgItemDTO;
 import com.lulu.HeroCorp.service.RpgItemService;
-import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -68,7 +66,7 @@ public class RpgItemController {
 
     @PostMapping
     public ResponseEntity<RpgItem> createItem(@RequestBody RpgItemDTO rpgItemDTO){
-        if (rpgItemDTO.isPostable()){
+        if (rpgItemDTO.isCreationValid()){
             RpgItem createdItem = rpgItemService.createItem(
                     rpgItemDTO.getName(),
                     rpgItemDTO.getCategory(),
@@ -86,7 +84,7 @@ public class RpgItemController {
     ){
         RpgItem existingItem = rpgItemService.getItemById(id);
         if (existingItem == null) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        if(!rpgItemDTO.isPutable()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        if(!rpgItemDTO.isModifyValid()) return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 
         if(rpgItemDTO.getName() != null) existingItem.setName(rpgItemDTO.getName());
         if(rpgItemDTO.getCategory() != null) existingItem.setIdCategory(rpgItemService.getIdCategoryByName(rpgItemDTO.getCategory()));

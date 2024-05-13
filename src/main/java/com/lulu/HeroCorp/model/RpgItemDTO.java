@@ -17,11 +17,11 @@ public class RpgItemDTO {
         this.effect = effect;
     }
 
-    public boolean isPostable(){
+    public boolean isCreationValid(){
         return this.name != null && this.category != null && this.price != null;
     }
 
-    public boolean isPutable(){
+    public boolean isModifyValid(){
         return this.name != null || this.category != null || this.price != null || this.effect!=null;
     }
 
